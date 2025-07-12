@@ -35,7 +35,7 @@ app.post('/api/gemini', async (req, res) => {
     };
 
     const geminiRes = await axios.post(
-      https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY},
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
       body,
       {
         headers: {
@@ -59,5 +59,5 @@ app.post('/api/gemini', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(🚀 Gemini API running at http://localhost:${PORT});
+  console.log(`🚀 Gemini API running at http://localhost:${PORT}`);
 });
