@@ -6,8 +6,14 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 
+// ✅ Root route for uptime monitoring
+app.get('/', (req, res) => {
+  res.status(200).send('🤖 Gemini API is online.');
+});
+
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
+// ✅ Gemini API route
 app.get('/api/gemini', async (req, res) => {
   const prompt = req.query.prompt;
   const Imgurl = req.query.Imgurl;
@@ -20,7 +26,6 @@ app.get('/api/gemini', async (req, res) => {
     const parts = [{ text: prompt || 'Describe this image.' }];
 
     if (Imgurl) {
-      // Download the image and convert to base64
       const imgRes = await axios.get(Imgurl, { responseType: 'arraybuffer' });
       const base64 = Buffer.from(imgRes.data).toString('base64');
 
