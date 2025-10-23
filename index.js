@@ -46,7 +46,8 @@ app.get('/api/gemini', async (req, res) => {
     const body = { contents: [{ parts }] };
 
     const geminiRes = await axios.post(
-      `https://generativelanguage.googleapis.com/v1/models/gemini-pro-vision:generateContent?key=${GEMINI_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?
+key=${GEMINI_API_KEY}`,
       body,
       { headers: { 'Content-Type': 'application/json' } }
     );
