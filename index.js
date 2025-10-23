@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY || 'AIzaSyAyU0I9zFaK0pknia_PEzUY-ffxjDp1HuE';
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY || 'AIzaSyC7B6LYfuk-0WefeIhepnJMyebmGCLqMIg';
 
 app.get('/', (req, res) => {
   res.status(200).send('🤖 Gemini Vision API is online.');
