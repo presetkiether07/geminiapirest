@@ -1,6 +1,6 @@
-import express from "express";
-import axios from "axios";
-import cors from "cors";
+const express = require("express");
+const axios = require("axios");
+const cors = require("cors");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -9,17 +9,17 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json({ limit: "25mb" }));
 
-// Your Gemini API key
+// 🔑 Gemini API key
 const GEMINI_API_KEY =
   process.env.GEMINI_API_KEY ||
   "AIzaSyC7B6LYfuk-0WefeIhepnJMyebmGCLqMIg";
 
-// Default route
+// 🟢 Default route
 app.get("/", (req, res) => {
   res.status(200).send("🤖 Gemini 2.5-Pro Vision API is online.");
 });
 
-// Main endpoint
+// 🧠 Main Gemini endpoint
 app.post("/api/gemini", async (req, res) => {
   const { prompt, Imgurl, img } = req.body;
 
@@ -30,7 +30,7 @@ app.post("/api/gemini", async (req, res) => {
   try {
     const parts = [{ text: prompt }];
 
-    // If base64 image is provided
+    // 🖼 If base64 image is provided
     if (img) {
       parts.push({
         inline_data: {
@@ -40,7 +40,7 @@ app.post("/api/gemini", async (req, res) => {
       });
     }
 
-    // If image URL is provided
+    // 🌐 If image URL is provided
     else if (Imgurl) {
       const image = await axios.get(Imgurl, { responseType: "arraybuffer" });
       const base64 = Buffer.from(image.data).toString("base64");
@@ -61,7 +61,7 @@ app.post("/api/gemini", async (req, res) => {
       ],
     };
 
-    // Use gemini-2.5-pro model
+    // 🤖 Send request to Gemini 2.5-Pro API
     const response = await axios.post(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent?key=${GEMINI_API_KEY}`,
       body,
@@ -87,7 +87,7 @@ app.post("/api/gemini", async (req, res) => {
   }
 });
 
-// Start server
+// 🚀 Start server
 app.listen(PORT, () => {
-  console.log(`🚀 Gemini 2.5-Pro API running on http://localhost:${PORT}`);
+  console.log(`✅ Gemini 2.5-Pro API running on http://localhost:${PORT}`);
 });
