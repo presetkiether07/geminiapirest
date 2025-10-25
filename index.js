@@ -12,120 +12,64 @@ const PORT = process.env.PORT || 3000;
 
 // 🟢 Root route
 app.get("/", (req, res) => {
-  res.send("🚀 Gemini Flash REST API is online!");
+res.send("🚀 Gemini Flash REST API is online!");
 });
 
 // 🧠 Gemini Flash Endpoint
 app.get("/api/gemini", async (req, res) => {
-  try {
-    const { prompt, imageurl } = req.query;
+try {
+const { prompt, imageurl } = req.query;
 
-    if (!prompt) {
-      return res.status(400).json({ error: "Missing 'prompt' query parameter." });
-    }
+if (!prompt) {  
+  return res.status(400).json({ error: "Missing 'prompt' query parameter." });  
+}  
 
-    // 🧩 Build request body
-    const parts = [{ text: prompt }];
+// 🧩 Build request body  
+const parts = [{ text: prompt }];  
 
-    // Kung may image URL, idagdag sa request
-    if (imageurl) {
-      parts.push({
-        file_data: {
-          mime_type: "image/jpeg",
-          file_uri: imageurl
-        }
-      });
-    }
+// Kung may image URL, idagdag sa request  
+if (imageurl) {  
+  parts.push({  
+    file_data: {  
+      mime_type: "image/jpeg",  
+      file_uri: imageurl  
+    }  
+  });  
+}  
 
-    const body = {
-      contents: [{ parts }]
-    };
+const body = {  
+  contents: [{ parts }]  
+};  
 
-    // 📨 Send request to Gemini Flash API
-    const response = await axios.post(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`,
-      body
-    );
+// 📨 Send request to Gemini Flash API  
+const response = await axios.post(  
+  `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`,  
+  body  
+);  
 
-    const output =
-      response.data?.candidates?.[0]?.content?.parts?.[0]?.text ||
-      "⚠️ No response generated.";
+const output =  
+  response.data?.candidates?.[0]?.content?.parts?.[0]?.text ||  
+  "⚠️ No response generated.";  
 
-    res.json({
-      model: "gemini-1.5-flash",
-      prompt,
-      imageurl: imageurl || null,
-      response: output
-    });
-  } catch (error) {
-    console.error("❌ Gemini Flash Error:", error.response?.data || error.message);
-    res.status(500).json({
-      error: "Failed to connect to Gemini Flash API",
-      details: error.response?.data || error.message
-    });
-  }
+res.json({  
+  model: "gemini-1.5-flash",  
+  prompt,  
+  imageurl: imageurl || null,  
+  response: output  
+});
+
+} catch (error) {
+console.error("❌ Gemini Flash Error:", error.response?.data || error.message);
+res.status(500).json({
+error: "Failed to connect to Gemini Flash API",
+details: error.response?.data || error.message
+});
+}
 });
 
 // 🩵 Keep-alive for Render / UptimeRobot
 app.get("/ping", (req, res) => res.send("pong"));
 
 app.listen(PORT, () =>
-  console.log(`✅ Server running on http://localhost:${PORT}`)
+console.log(✅ Server running on http://localhost:${PORT})
 );
-          mime_type: "image/jpeg",
-          data: img,
-        },
-      });
-    }
-
-    // 🌐 If image URL is provided
-    else if (Imgurl) {
-      const image = await axios.get(Imgurl, { responseType: "arraybuffer" });
-      const base64 = Buffer.from(image.data).toString("base64");
-      parts.push({
-        inline_data: {
-          mime_type: "image/jpeg",
-          data: base64,
-        },
-      });
-    }
-
-    const body = {
-      contents: [
-        {
-          role: "user",
-          parts,
-        },
-      ],
-    };
-
-    // 🤖 Send request to Gemini 2.5-Pro API
-    const response = await axios.post(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent?key=${GEMINI_API_KEY}`,
-      body,
-      { headers: { "Content-Type": "application/json" } }
-    );
-
-    const reply =
-      response.data?.candidates?.[0]?.content?.parts?.[0]?.text ||
-      "No response from Gemini.";
-
-    res.json({
-      success: true,
-      model: "gemini-2.5-pro",
-      prompt,
-      reply,
-    });
-  } catch (error) {
-    console.error("❌ Error:", error.response?.data || error.message);
-    res.status(500).json({
-      success: false,
-      error: error.response?.data || error.message,
-    });
-  }
-});
-
-// 🚀 Start server
-app.listen(PORT, () => {
-  console.log(`✅ Gemini 2.5-Pro API running on http://localhost:${PORT}`);
-});
