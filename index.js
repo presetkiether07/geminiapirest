@@ -30,9 +30,9 @@ app.get("/api/gemini", async (req, res) => {
     // Kung may image URL, idagdag sa request
     if (imageurl) {
       parts.push({
-        file_data: {
-          mime_type: "image/jpeg",
-          file_uri: imageurl
+        inline_data: {
+  mime_type: "image/jpeg",
+  data: imageurl
         }
       });
     }
