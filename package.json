@@ -1,14 +1,25 @@
 {
-  "name": "gemini-rest-api",
+  "name": "gemini-flash-api",
   "version": "1.0.0",
-  "description": "Custom REST API wrapper for Gemini 2.0 Flash",
+  "description": "A simple REST API for Google Gemini 1.5 Flash model (text + image support)",
   "main": "index.js",
+  "type": "commonjs",
   "scripts": {
     "start": "node index.js"
   },
+  "keywords": [
+    "gemini",
+    "api",
+    "nodejs",
+    "express",
+    "ai",
+    "google-ai",
+    "rest"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
   "dependencies": {
-    "axios": "^1.6.7",
-    "cors": "^2.8.5",
-    "express": "^4.18.4"
+    "axios": "^1.7.0",
+    "express": "^4.19.0"
   }
 }
